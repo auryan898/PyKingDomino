@@ -5,7 +5,7 @@ from itertools import combinations,permutations
 import itertools
 
 ORIENTATION_ORDER = [(-1,0),(0,1),(1,0),(0,-1)]
-DOMINO_ORIENTATIONS = "1st-top 1st-right 1st-bottom 1st-left 2nd-top 2nd-right 2nd-bottom 2nd-left".split(" ")
+DOMINO_ORIENTATIONS = "1st-up 1st-right 1st-down 1st-left 2nd-up 2nd-right 2nd-down 2nd-left".split(" ")
 
 # Preparing the game,
 # - Shuffled, 24,36, or 48 Dominoes, from file
@@ -307,12 +307,12 @@ class Game(object):
     def ascii_run(self):
         self.init_players(int(raw_input("how many players? ")))
         num_p = self.num_players
-        print num_p
+        print ""
         colors = []
         for i in range(3 if num_p==3 else 4):
             ind = i%2 if num_p==2 else i
             colors.append( valid_input(lambda x: type(x)==str,"Which color of kingdom {} for Player {}? ".format(i+1, ind+1)) )
-        print colors
+        print ""
         self.init_kingdoms(colors)
         self.init_game_state()
         self.init_dominoes('test_dominoes.txt') # TODO: choose better dominoes file?
@@ -332,19 +332,20 @@ class Game(object):
                 if kingdom.old_domino is not None and type(kingdom.old_domino)==Domino: # This won't run the first time around
                     placements = kingdom.get_curr_placements()  
                     print "First, you place your old domino somewhere {}".format(str(kingdom.old_domino))
-                    print "This is your board: \n"+kingdom.to_ascii()+"\n" # TODO: show the possible placements on board
+                    print "This is your board: \n"+kingdom.to_ascii() # TODO: show the possible placements on board
                     if len(placements)==0: 
                         print "But you have no possible placements for this domino piece \n So you lose this piece."
                     else:
-                        print "The dominoes you can choose from later are:"
+                        print "The dominoes you will choose from are:"
                         print " | ".join([ "[{}] {}+{}({})".format(i, d.land1, d.land2, d.crowns) for i,d in enumerate(self.pickable_dominoes) ]) + "\n"
                         print "Possible placement locations include: \n"+ ", ".join([ "[{}] ({},{})".format(i,x,y) for i,(x,y,o) in enumerate(placements) ])
-                        
+                        print ""
                         choice1 = valid_input(lambda x: x.isdigit() and int(x)<len(placements) and int(x)>=0,"Which do you choose? " )
                         choice1 = int(choice1)
 
-                        print "Now you must choose an orientation"
-                        print "" # TODO: create ascii diagram of orientation explanation
+                        print "Now you must choose an orientation of this domino"
+                        print "Choose the domino's direction to point toward for either the 1st half, or 2nd half (which has the crowns)" # TODO: create ascii diagram of orientation explanation
+                        print ""
                         print "Possible orientations include: \n"+ ", ".join([ "[{}] ({})".format(i,DOMINO_ORIENTATIONS[o]) for i,o in enumerate(placements[choice1][2]) ]) # TODO: make a better orientation options display
                         
                         choice2 = valid_input(lambda x: x.isdigit() and int(x)<len(placements[choice1][2]) and int(x)>=0,"Which do you choose? " )
@@ -352,7 +353,8 @@ class Game(object):
 
                         kingdom.place_old_domino(placements,choice1,choice2)
                     kingdom.old_domino = None
-                    print "This is now your board: \n"+kingdom.to_ascii()+"\n" # TODO: just make a better ascii board
+                    print ""
+                    print "This is now your board: \n"+kingdom.to_ascii() # TODO: just make a better ascii board
 
                 options = self.pickable_dominoes               
                 if len(options)>0:
@@ -361,9 +363,9 @@ class Game(object):
                     print " | ".join([ "[{}] {}+{}({})".format(i, d.land1, d.land2, d.crowns) for i,d in enumerate(options) ]) + "\n"
                     
                     choice = valid_input(lambda x : x.isdigit() and int(x)>=0 and int(x)<len(options),"Which do you choose? ")
-                    print choice
+                    # print ""
                     self.pick_domino(kingdom,int(choice)) 
-                    print kingdom.old_domino
+                    print "You chose "+str(kingdom.old_domino)+"\n\n"
                 else:
                     playable=False
             self.round_num+=1
@@ -373,7 +375,7 @@ class Game(object):
             c,t = kingdom.get_stats()
             print "The {}, ruled by Player {} has {} crowns and {} tiles.".format(kingdom.display_name(),kingdom.player_num,c,t)
             print kingdom.to_ascii()
-            print "\n"
+            print ""
         if len(kingdoms)==1:
             kingdom = kingdoms[0]
             crowns,tiles = kingdom.get_stats()
