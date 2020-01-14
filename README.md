@@ -4,7 +4,12 @@ King Domino is a board game, but it's the game that we must recreate for Course 
 
 ## Installation, Playing the game
 
-So if you'd like to play, download the [zip file](), install the game dependencies with `python setup.py install` or `sudo python setup.py install` and run the script `KingDomino.py` or in a separate python script:
+You can run the game in the browser with this [repl.it](https://PyKingDomino.ryanau.repl.run)
+
+If you'd like to play on your own computer
+1. download the [zip file](https://github.com/auryan898/PyKingDomino/archive/master.zip) and extract the contents to a folder
+2. install the game dependencies with `python setup.py install` or `sudo python setup.py install`
+3. run the script `KingDomino.py` from the zip file OR run this code inside of a separate python script:
 
     from KingDomino import Game
     game = Game()
