@@ -4,7 +4,7 @@ King Domino is a board game, but it's the game that we must recreate for Course 
 
 ## Installation, Playing the game
 
-You can run the game in the browser with this [repl.it](https://PyKingDomino.ryanau.repl.run)
+**You can run the game in the browser with this [repl.it](https://PyKingDomino.ryanau.repl.run)**
 
 If you'd like to play on your own computer
 1. download the [zip file](https://github.com/auryan898/PyKingDomino/archive/master.zip) and extract the contents to a folder
